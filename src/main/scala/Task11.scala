@@ -1,3 +1,6 @@
+// Дан набор различных целых чисел.
+// Верните все возможные перестановки.
+
 object Task11 {
   def solution(nums: Array[Int]): List[List[Int]] = {
 

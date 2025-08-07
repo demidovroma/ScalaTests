@@ -1,3 +1,5 @@
+// По заданной строке найдите длину самой длинной подстроки без повторяющихся символов.
+
 object Task8 {
   def solution(s: String): Int = {
     s.toSet.mkString.length
