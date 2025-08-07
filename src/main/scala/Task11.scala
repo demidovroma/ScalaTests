@@ -4,16 +4,7 @@
 object Task11 {
   def solution(nums: Array[Int]): List[List[Int]] = {
 
-    var res = List(List[Int](nums(0)))
-
-    for (n <- nums.slice(1, nums.length)) {
-      for(v <- res) {
-        for (i <- 0 to v.length) {
-          res = res :+ (((v.take(i) :+ n ) ++ v.slice(i, v.length)))
-        }
-      }
-    }
-    res.filter(_.length == nums.length)
+    nums.toList.permutations.toList
 
   }
 
