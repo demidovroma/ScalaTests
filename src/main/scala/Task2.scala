@@ -6,19 +6,12 @@
 
 object Task2 {
   def solution(x: Int): Boolean = {
-    if (x < 0) return false
 
-    var num = x
-    var revers = 0
+    if (x < 0 || (x % 10 == 0 && x != 0)) return false
 
-    while (num != 0) {
-      val lastDigit = num % 10
-      revers = revers * 10
-      revers += lastDigit
-      num /= 10
-    }
+    val digit = LazyList.iterate(x)(n => n / 10).takeWhile(_ > 0).map(n => n % 10).toList
+    digit == digit.reverse
 
-    x == revers
   }
 
   println(s"Task 2 = ${solution(121)}")
