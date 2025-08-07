@@ -1,0 +1,24 @@
+object Task12 {
+  def solution(s: String): Boolean = {
+    s.strip().matches("""^[+-]?(\d+(\.\d*)?|\.\d+)([eE][+-]?\d+)?$""")
+  }
+
+  println(s"Task 12 = ${solution("0")}")         // Task 12 = true
+  println(s"Task 12 = ${solution(" 0.1 ")}")     // Task 12 = true
+  println(s"Task 12 = ${solution("abc")}")       // Task 12 = false
+  println(s"Task 12 = ${solution("1 a")}")       // Task 12 = false
+  println(s"Task 12 = ${solution("2e10")}")      // Task 12 = true
+  println(s"Task 12 = ${solution(" -90e3   ")}") // Task 12 = true
+  println(s"Task 12 = ${solution(" 1e")}")       // Task 12 = false
+  println(s"Task 12 = ${solution("e3")}")        // Task 12 = false
+  println(s"Task 12 = ${solution(" 6e-1")}")     // Task 12 = true
+  println(s"Task 12 = ${solution(" 99e2.5 ")}")  // Task 12 = false
+  println(s"Task 12 = ${solution("53.5e93")}")   // Task 12 = true
+  println(s"Task 12 = ${solution(" --6 ")}")     // Task 12 = false
+  println(s"Task 12 = ${solution("-+3")}")       // Task 12 = false
+  println(s"Task 12 = ${solution("95a54e53")}")  // Task 12 = false
+  println(s"Task 12 = ${solution(".1")}")        // Task 12 = true
+  println(s"Task 12 = ${solution("4.")}")        // Task 12 = true
+  println(s"Task 12 = ${solution("-.9")}")       // Task 12 = true
+  println(s"Task 12 = ${solution("-90E3")}")     // Task 12 = true
+}
