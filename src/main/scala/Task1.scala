@@ -25,4 +25,6 @@ object Task1 {
   println(s"Task 1 = ${solution(Array(3, 3), 6).toList}")
   // Task 1 = List(0, 1)
 
+  println(s"Task 1 = ${solution(Array(3, 3, 2), 6).mkString("Array(", ", ", ")")}")
+
 }
