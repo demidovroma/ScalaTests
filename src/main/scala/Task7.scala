@@ -4,11 +4,11 @@
 
 object Task7 {
   def solution(nums: Array[Int]): Boolean = {
-    var index = nums.head
-    for (i <- nums.indices by index) {
-      if(nums(i) != nums.last) index += i
-    }
-    index == nums.length-1
+    nums.indices.foldLeft(nums(0)) { (max, index) =>
+      if (max < index) 0
+      else if (max >= nums.length - 1) nums.length-1
+      else Math.max(max, index + nums(index))
+    } == nums.length-1
   }
 
   println(s"Task 7 = ${solution(Array(2, 3, 1, 1, 4))}")
