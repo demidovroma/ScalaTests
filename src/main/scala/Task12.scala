@@ -10,7 +10,8 @@
 
 object Task12 {
   def solution(s: String): Boolean = {
-    s.strip().matches("""^[+-]?(\d+(\.\d*)?|\.\d+)([eE][+-]?\d+)?$""")
+    val pattern = """^\s*[+-]?(\d+(\.\d*)?|\.\d+)([eE][+-]?\d+)?\s*$""".r
+    pattern.matches(s.trim)
   }
 
   println(s"Task 12 = ${solution("0")}")         // Task 12 = true

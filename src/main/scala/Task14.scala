@@ -8,43 +8,34 @@
 
 object Task14 {
   def solution(s: String, wordDict: List[String]): List[String] = {
-    // Преобразуем словарь в множество для быстрого поиска
+
     val wordSet = wordDict.toSet
-    // Используем память для хранения результатов
-    val memo = scala.collection.mutable.Map[String, List[String]]()
 
-    // Вложенная функция для выполнения рекурсивного поиска
+    val cache = scala.collection.mutable.Map[Int, List[String]]()
+
     def wordBreak(start: Int): List[String] = {
-      // Если уже обрабатывали данную подстроку, возвращаем закэшированные результаты
-      if (memo.contains(s.substring(start))) return memo(s.substring(start))
-
-      // Список для хранения всех возможных предложений
-      var result = List[String]()
-
-      // Проходимся по подстроке
-      for (end <- start + 1 to s.length) {
-        val word = s.substring(start, end) // Текущая подстрока
-        // Если слово в словаре
-        if (wordSet.contains(word)) {
-          // Если исчерпали строку, добавляем текущее слово к результату
-          if (end == s.length) {
-            result = result :+ word
-          } else {
-            // Рекурсивный вызов для оставшейся подстроки
-            val restOfTheSentence = wordBreak(end)
-            for (sentence <- restOfTheSentence) {
-              result = result :+ (word + " " + sentence)
-            }
-          }
-        }
+      if (cache.contains(start)) {
+        return cache(start)
       }
 
-      // Сохраняем результаты в кэш
-      memo(s.substring(start)) = result
-      result
+      if (start == s.length) {
+        return List("")
+      }
+
+      val results = for {
+        end <- (start + 1 to s.length)
+        word = s.substring(start, end)
+        if wordSet.contains(word)
+        next <- wordBreak(end)
+      } yield {
+        if (next.isEmpty) word
+        else word + " " + next
+      }
+
+      cache(start) = results.toList
+      results.toList
     }
 
-    // Запускаем рекурсивный поиск с начальным индексом 0
     wordBreak(0)
   }
 

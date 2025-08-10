@@ -9,32 +9,30 @@
 
 object Task9 {
   def solution(s: String, p: String): Boolean = {
-    // Создаем двумерный массив для хранения результатов
-    val dp = Array.fill(s.length + 1, p.length + 1)(false)
+    def matchPattern(s: String, p: String): Boolean = {
+      // Базовый случай: оба пустые
+      if (s.isEmpty && p.isEmpty) true
+      // Если шаблон пустой, а строка нет
+      else if (p.isEmpty) false
+      // Если строка пустая, проверяем шаблон на *
+      else if (s.isEmpty) {
+        if (p.length >= 2 && p(1) == '*') matchPattern(s, p.substring(2))
+        else false
+      } else {
+        val firstMatch = p(0) == '.' || p(0) == s(0)
 
-    // Пустая строка соответствует пустому шаблону
-    dp(0)(0) = true
-
-    // Обрабатываем случай, когда шаблон содержит символы *, которые могут соответствовать пустой строке
-    for (j <- 1 to p.length) {
-      if (p(j - 1) == '*') {
-        dp(0)(j) = dp(0)(j - 2) // * может соответствовать пустой строке
-      }
-    }
-
-    // Заполняем таблицу dp
-    for (i <- 1 to s.length) {
-      for (j <- 1 to p.length) {
-        if (p(j - 1) == s(i - 1) || p(j - 1) == '.') {
-          dp(i)(j) = dp(i - 1)(j - 1) // Символы совпадают
-        } else if (p(j - 1) == '*') {
-          dp(i)(j) = dp(i)(j - 2) || // * соответствует 0 символам
-            (dp(i - 1)(j) && (s(i - 1) == p(j - 2) || p(j - 2) == '.')) // * соответствует 1 или более символам
+        if (p.length >= 2 && p(1) == '*') {
+          // Вариант 1: игнорируем * и символ перед ним
+          // Вариант 2: используем символ и продолжаем с тем же шаблоном
+          matchPattern(s, p.substring(2)) ||
+            (firstMatch && matchPattern(s.substring(1), p))
+        } else {
+          firstMatch && matchPattern(s.substring(1), p.substring(1))
         }
       }
     }
 
-    dp(s.length)(p.length) // Возвращаем результат
+    matchPattern(s, p)
   }
 
   println(s"Task 9 = ${solution("aa", "a")}")

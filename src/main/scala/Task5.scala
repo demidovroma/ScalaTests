@@ -6,7 +6,9 @@
 
 object Task5 {
   def solution(nums: Array[Int]): List[List[Int]] = {
-    nums.flatMap(i => nums.toList.combinations(i)).toList :+ List()
+    nums.toList.foldLeft(List(List[Int]())) { (a, b) =>
+      a ++ a.map(b :: _)
+    }
   }
 
   println(s"Task 5 = ${solution(Array(1, 2, 3))}")
@@ -20,4 +22,6 @@ object Task5 {
   //   List(1, 2),
   //   List()
   // )
+
+  println(s"Task 5 = ${solution(Array(4, 5, 3))}")
 }

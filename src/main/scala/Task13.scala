@@ -2,44 +2,48 @@
 // Восстановите ее, вернув все возможные допустимые комбинации IP-адресов.
 //
 // Примечание:
-// - Действительный IP-адрес состоит ровно из четырех целых чисел, каждое целое число находится в диапазоне от 0 до 255, разделенных одиночными точками и не может иметь нулей в начале кроме самого числа 0. Например, «0.3.14.221» и «192.168.0.1» - допустимые IP-адреса, а «0.033.255.247», «192.168.0.299» и «192.168@0.1» - недопустимые IP-адреса.
+// - Действительный IP-адрес состоит ровно из четырех целых чисел,
+// каждое целое число находится в диапазоне от 0 до 255,
+// разделенных одиночными точками и не может иметь нулей в начале кроме самого числа 0.
+// Например, «0.3.14.221» и «192.168.0.1» - допустимые IP-адреса,
+// а «0.033.255.247», «192.168.0.299» и «192.168@0.1» - недопустимые IP-адреса.
 // - 0 <= s.length <= 3000
 // - Строка состоит только из цифр.
 
 object Task13 {
   def solution(s: String): List[String] = {
-    val result = scala.collection.mutable.ListBuffer[String]()
-    val n = s.length
-
-    def isValidPart(part: String): Boolean = {
-      if (part.isEmpty || (part.length > 1 && part.startsWith("0"))) {
-        false
-      } else {
-        val num = part.toInt
-        num >= 0 && num <= 255
-      }
+    def isValid(part: String): Boolean = {
+      if (part.length > 1 && part.startsWith("0")) false
+      else part.toInt <= 255
     }
 
-    def backtrack(index: Int, parts: List[String]): Unit = {
-      if (parts.length == 4) {
-        if (index == n) {
-          result.append(parts.mkString("."))
-        }
-        return
-      }
+    def findIPs(s: String, start: Int, partsLeft: Int, current: String, result: List[String]): List[String] = {
+      if (partsLeft == 0) {
+        if (start == s.length)
+          current :: result
+        else
+          result
+      } else {
+        val minLength = math.max(1, (s.length - start - 3 * (partsLeft - 1)))
+        val maxLength = math.min(3, s.length - start)
 
-      for (i <- 1 to 3) {
-        if (index + i <= n) {
-          val part = s.substring(index, index + i)
-          if (isValidPart(part)) {
-            backtrack(index + i, parts :+ part)
+        // Добавляем проверку на минимальную/максимальную длину
+        if (minLength > maxLength) result
+        else {
+          (minLength to maxLength).foldLeft(result) { (acc, length) =>
+            val part = s.substring(start, start + length)
+            if (isValid(part)) {
+              val newCurrent =
+                if (current.isEmpty) part
+                else s"$current.$part"
+              findIPs(s, start + length, partsLeft - 1, newCurrent, acc)
+            } else acc
           }
         }
       }
     }
 
-    backtrack(0, List())
-    result.toList
+    findIPs(s, 0, 4, "", Nil)
   }
 
   println(s"Task 13 = ${solution("25525511135")}")

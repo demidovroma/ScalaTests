@@ -7,9 +7,34 @@
 // - В массиве нет дубликатов.
 // - Сложность времени выполнения вашего алгоритма должна быть порядка O(log n).
 
+import scala.annotation.tailrec
+
 object Task4 {
   def solution(nums: Array[Int], target: Int): Int = {
-    nums.indexOf(target)
+    @tailrec
+    def search(leftSide: Int, rightSide: Int): Int =
+
+      if (leftSide > rightSide)
+        -1
+      else {
+        val centerIndex = leftSide + (rightSide - leftSide) / 2
+
+        if (nums(centerIndex) == target)
+          centerIndex
+        else if (nums(leftSide) <= nums(centerIndex))
+          if (nums(leftSide) <= target && target < nums(centerIndex))
+            search(leftSide, centerIndex - 1)
+          else
+            search(centerIndex + 1, rightSide)
+        else
+          if (nums(centerIndex) < target && target <= nums(rightSide))
+            search(centerIndex + 1, rightSide)
+          else
+            search(leftSide, centerIndex - 1)
+      }
+
+    search(0, nums.length - 1)
+
   }
 
   println(s"Task 4 = ${solution(Array(4, 5, 6, 7, 0, 1, 2), 0)}")

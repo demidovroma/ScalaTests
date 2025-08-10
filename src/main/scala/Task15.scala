@@ -7,7 +7,39 @@
 
 object Task15 {
   def solution(grid: Array[Array[Char]]): Int = {
-    1
+    def dfs(x: Int, y: Int): Unit = {
+      if (x < 0 || x >= grid.length ||
+        y < 0 || y >= grid(0).length ||
+        grid(x)(y) == '0') {
+        return
+      }
+
+      // Помечаем посещенную землю как воду
+      grid(x)(y) = '0'
+
+      // Рекурсивно посещаем соседние клетки
+      dfs(x + 1, y) // вниз
+      dfs(x - 1, y) // вверх
+      dfs(x, y + 1) // вправо
+      dfs(x, y - 1) // влево
+    }
+
+    def countIslands(i: Int, j: Int, count: Int): Int = {
+      if (i >= grid.length) return count
+      if (j >= grid(0).length) return countIslands(i + 1, 0, count)
+
+      val newCount =
+        if (grid(i)(j) == '1') {
+          dfs(i, j)
+          count + 1
+        } else {
+          count
+        }
+
+      countIslands(i, j + 1, newCount)
+    }
+
+    countIslands(0, 0, 0)
   }
 
   val grid1 = Array(
