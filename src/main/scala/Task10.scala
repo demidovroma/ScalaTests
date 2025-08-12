@@ -4,51 +4,32 @@
 // Примечание:
 // - Вы должны повернуть изображение на месте, что означает, что вы должны изменить входную 2D матрицу напрямую. НЕ выделяйте другую 2D матрицу.
 
-import scala.annotation.tailrec
-
 object Task10 {
   def solution(matrix: Array[Array[Int]]): Array[Array[Int]] = {
     val n = matrix.length
 
-    // Рекурсия транспонирования
-    @tailrec
-    def transpose(i: Int, j: Int): Unit = {
-      if (i < n) {
-        if (j < n) {
-          if (j > i) {
-            val temp = matrix(i)(j)
-            matrix(i)(j) = matrix(j)(i)
-            matrix(j)(i) = temp
-          }
-          transpose(i, j + 1)
-        } else {
-          transpose(i + 1, i + 1)
-        }
+    // Транспонирование матрицы на месте
+    for (i <- 0 until n) {
+      for (j <- i + 1 until n) {
+        val temp = matrix(i)(j)
+        matrix(i)(j) = matrix(j)(i)
+        matrix(j)(i) = temp
       }
     }
 
-    // Рекурсия для переворота строки
-    @tailrec
-    def reverseRow(row: Array[Int], left: Int, right: Int): Unit = {
-      if (left < right) {
-        val temp = row(left)
-        row(left) = row(right)
-        row(right) = temp
-        reverseRow(row, left + 1, right - 1)
+    // Переворот каждой строки на месте
+    for (i <- 0 until n) {
+      var left = 0
+      var right = n - 1
+      while (left < right) {
+        val temp = matrix(i)(left)
+        matrix(i)(left) = matrix(i)(right)
+        matrix(i)(right) = temp
+        left += 1
+        right -= 1
       }
     }
 
-    // Рекурсивный перебор строк для переворота
-    @tailrec
-    def reverseAllRows(i: Int): Unit = {
-      if (i < n) {
-        reverseRow(matrix(i), 0, n - 1)
-        reverseAllRows(i + 1)
-      }
-    }
-
-    transpose(0, 0)
-    reverseAllRows(0)
     matrix
   }
 

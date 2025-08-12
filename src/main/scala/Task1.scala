@@ -6,25 +6,23 @@
 // - Нельзя использовать один и тот же элемент массива дважды
 
 import scala.annotation.tailrec
-import scala.collection.mutable
 
 object Task1 {
 
   def solution(nums: Array[Int], target: Int): Array[Int] = {
     @tailrec
-    def loop(n: Int, map: mutable.Map[Int, Int]): Array[Int] = {
-      if (n < 0) Array(-1, -1)
+    def loop(i: Int, indexByNum: Map[Int, Int]): Array[Int] = {
+      if (i < 0) Array(-1, -1)
       else {
-        if (map.contains(target-nums(n))) {
-          Array(map(target-nums(n)), n).sorted
+        if (indexByNum.contains(target-nums(i))) {
+          Array(indexByNum(target-nums(i)), i)
         } else {
-          map(nums(n)) = n
-          loop(n - 1, map)
+          loop(i - 1, indexByNum.updated(nums(i), i))
         }
       }
     }
 
-    loop(nums.length-1, mutable.Map[Int, Int]())
+    loop(nums.length-1, Map[Int, Int]())
   }
 
   println(s"Task 1 = ${solution(Array(2, 7, 11, 15), 9).toList}")

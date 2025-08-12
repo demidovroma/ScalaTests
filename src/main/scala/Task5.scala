@@ -6,8 +6,8 @@
 
 object Task5 {
   def solution(nums: Array[Int]): List[List[Int]] = {
-    nums.toList.foldLeft(List(List[Int]())) { (a, b) =>
-      a ++ a.map(b :: _)
+    nums.toList.foldLeft(List(List[Int]())) { (acc, b) =>
+      acc ++ acc.map(b :: _)
     }
   }
 

@@ -10,9 +10,14 @@ object Task8 {
         maxLength
       } else {
         val currentChar = s(end)
-        val newStart = if (charMap.contains(currentChar) && charMap(currentChar) >= start) charMap(currentChar) + 1 else start
+        val newStart = if (charMap.exists { case (char, index) => char == currentChar && index >= start })
+          charMap(currentChar) + 1
+        else
+          start
+
         val newMap = charMap + (currentChar -> end)
         val newMaxLength = math.max(maxLength, end - newStart + 1)
+
         loop(newStart, end + 1, newMap, newMaxLength)
       }
     }

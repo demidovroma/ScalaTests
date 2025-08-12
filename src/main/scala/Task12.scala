@@ -12,6 +12,9 @@ object Task12 {
   def solution(s: String): Boolean = {
     val pattern = """^\s*[+-]?(\d+(\.\d*)?|\.\d+)([eE][+-]?\d+)?\s*$""".r
     pattern.matches(s.trim)
+
+    // Алтернативный вариант
+    // s.trim.matches("""^\s*[+-]?(\d+(\.\d*)?|\.\d+)([eE][+-]?\d+)?\s*$""")
   }
 
   println(s"Task 12 = ${solution("0")}")         // Task 12 = true
