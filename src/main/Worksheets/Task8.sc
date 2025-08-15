@@ -1,19 +1,28 @@
+import scala.annotation.tailrec
 // По заданной строке найдите длину самой длинной подстроки без повторяющихся символов.
 
-  def solution(s: String): Int = {
-    var maxLength = 0
-    var start = 0
-    var charIndexMap = Map[Char, Int]()
+//
 
-    for (end <- s.indices) {
-      val char = s(end)
-      if (charIndexMap.contains(char)) {
-        start = math.max(start, charIndexMap(char) + 1)
+  def solution(s: String): Int = {
+    @tailrec
+    def loop(start: Int, end: Int, charMap: Map[Char, Int], maxLength: Int): Int = {
+      if (end == s.length) {
+        maxLength
+      } else {
+        val currentChar = s(end)
+        val newStart = if (charMap.exists { case (char, index) => char == currentChar && index >= start })
+            charMap(currentChar) + 1
+          else
+            start
+
+        val newMap = charMap + (currentChar -> end)
+        val newMaxLength = math.max(maxLength, end - newStart + 1)
+
+        loop(newStart, end + 1, newMap, newMaxLength)
       }
-      charIndexMap += (char -> end)
-      maxLength = math.max(maxLength, end - start + 1)
     }
-    maxLength
+
+    loop(0, 0, Map.empty, 0)
   }
 
   println(s"Task 8 = ${solution("abcabcbb")}")

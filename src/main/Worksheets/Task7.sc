@@ -13,18 +13,23 @@ import scala.annotation.tailrec
 var nums = Array(2, 3, 1, 1, 4)
 
 def solution(nums: Array[Int]): Boolean = {
-  nums.indices.foldLeft(nums(0)) { (maxReach, index) =>
+
+  0 == (nums.length - 1 to (0, -1)).foldLeft(nums.length - 1)((a, b) =>
+    if (nums(b) + b >= a) b else a
+  )
+
+//  nums.indices.foldLeft(nums(0)) { (maxReach, index) =>
 //    println("maxReach (val) = " + maxReach)
 //    println(" - ")
 //    println("index = " + index)
 //    println("index + nums(index) = " + (index + nums(index)))
 //    println(" *** ")
-
-    if (maxReach < index) 0 // Если текущая позиция недостижима, возвращаем 0
-    else if (maxReach >= nums.length - 1) nums.length-1 // Если уже достигли конца, останавливаемся
-    else Math.max(maxReach, index + nums(index)) // Обновляем максимальную достижимую позицию
-
-  } == nums.length - 1
+//
+//    if (maxReach < index) 0 // Если текущая позиция недостижима, возвращаем 0
+//    else if (maxReach >= nums.length - 1) nums.length-1 // Если уже достигли конца, останавливаемся
+//    else Math.max(maxReach, index + nums(index)) // Обновляем максимальную достижимую позицию
+//
+//  } == nums.length - 1
 }
 
 // Тестовые случаи

@@ -6,46 +6,39 @@
 // - Одно и то же слово в словаре может быть многократно использовано в сегментации.
 // - Словарь не содержит повторяющихся слов.
 
-  def solution(s: String, wordDict: List[String]): List[String] = {
-    // Преобразуем словарь в множество для быстрого поиска
-    val wordSet = wordDict.toSet
-    // Используем память для хранения результатов
-    val memo = scala.collection.mutable.Map[String, List[String]]()
+def solution(s: String, wordDict: List[String]): List[String] = {
 
-    // Вложенная функция для выполнения рекурсивного поиска
-    def wordBreak(start: Int): List[String] = {
-      // Если уже обрабатывали данную подстроку, возвращаем закэшированные результаты
-      if (memo.contains(s.substring(start))) return memo(s.substring(start))
+  val wordSet = wordDict.toSet
 
-      // Список для хранения всех возможных предложений
-      var result = List[String]()
+  val cache = scala.collection.mutable.Map[Int, List[String]]()
 
-      // Проходимся по подстроке
-      for (end <- start + 1 to s.length) {
-        val word = s.substring(start, end) // Текущая подстрока
-        // Если слово в словаре
-        if (wordSet.contains(word)) {
-          // Если исчерпали строку, добавляем текущее слово к результату
-          if (end == s.length) {
-            result = result :+ word
-          } else {
-            // Рекурсивный вызов для оставшейся подстроки
-            val restOfTheSentence = wordBreak(end)
-            for (sentence <- restOfTheSentence) {
-              result = result :+ (word + " " + sentence)
-            }
-          }
+  def wordBreak(start: Int): List[String] = {
+    if (cache.contains(start)) {
+      cache(start)
+    }else {
+
+      if (start == s.length) {
+        List("")
+      }else {
+
+        val results = for {
+          end <- (start + 1 to s.length)
+          word = s.substring(start, end)
+          if wordSet.contains(word)
+          next <- wordBreak(end)
+        } yield {
+          if (next.isEmpty) word
+          else s"$word $next"
         }
+
+        cache(start) = results.toList
+        results.toList
       }
-
-      // Сохраняем результаты в кэш
-      memo(s.substring(start)) = result
-      result
     }
-
-    // Запускаем рекурсивный поиск с начальным индексом 0
-    wordBreak(0)
   }
+
+  wordBreak(0)
+}
 
   println(s"Task 14 = ${solution("catsanddog", List("cat", "cats", "and", "sand", "dog"))}")
   // Task 14 = List("cats and dog", "cat sand dog")
