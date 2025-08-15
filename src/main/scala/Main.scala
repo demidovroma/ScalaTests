@@ -1,20 +1,20 @@
 
 object Main {
   def main(args: Array[String]): Unit = {
-    Task1 // На проверку (Исправлено)
+    Task1 // Successful
     Task2 // Successful
-    Task3 // На проверку
+    Task3 // Successful
     Task4 // Successful
     Task5 // Successful
-//    Task6 // Пока не сделал
+    Task6 // На проверку
     Task7 // Successful
-    Task8 // На проверку (Исправлено)
-//    Task9 // Надо разобраться
-    Task10 // На проверку (Исправлено)
+    Task8 // Successful
+    Task9 // На проверку
+    Task10 // На проверку
     Task11 // Successful
     Task12 // Successful
-    Task13 // На проверку
+    Task13 // Successful
     Task14 // На проверку
-//    Task15 // Надо разобраться
+    Task15 // На проверку
   }
 }

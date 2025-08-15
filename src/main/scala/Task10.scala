@@ -4,11 +4,13 @@
 // Примечание:
 // - Вы должны повернуть изображение на месте, что означает, что вы должны изменить входную 2D матрицу напрямую. НЕ выделяйте другую 2D матрицу.
 
+// Исправить:
+// var - не нужны, нужно while заменить на второй for
+
 object Task10 {
   def solution(matrix: Array[Array[Int]]): Array[Array[Int]] = {
     val n = matrix.length
 
-    // Транспонирование матрицы на месте
     for (i <- 0 until n) {
       for (j <- i + 1 until n) {
         val temp = matrix(i)(j)
@@ -17,16 +19,12 @@ object Task10 {
       }
     }
 
-    // Переворот каждой строки на месте
     for (i <- 0 until n) {
-      var left = 0
-      var right = n - 1
-      while (left < right) {
+      for (left <- 0 until n / 2) {
+        val right = n - 1 - left
         val temp = matrix(i)(left)
         matrix(i)(left) = matrix(i)(right)
         matrix(i)(right) = temp
-        left += 1
-        right -= 1
       }
     }
 

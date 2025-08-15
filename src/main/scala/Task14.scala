@@ -6,6 +6,10 @@
 // - Одно и то же слово в словаре может быть многократно использовано в сегментации.
 // - Словарь не содержит повторяющихся слов.
 
+// Исправить:
+// word + " " + next - лучше использовать интерполяция строк
+// return - не используем;
+
 object Task14 {
   def solution(s: String, wordDict: List[String]): List[String] = {
 
@@ -15,25 +19,25 @@ object Task14 {
 
     def wordBreak(start: Int): List[String] = {
       if (cache.contains(start)) {
-        return cache(start)
-      }
+        cache(start)
+      }else {
+        if (start == s.length) {
+          List("")
+        }else {
+          val results = for {
+            end <- (start + 1 to s.length)
+            word = s.substring(start, end)
+            if wordSet.contains(word)
+            next <- wordBreak(end)
+          } yield {
+            if (next.isEmpty) word
+            else s"$word $next"
+          }
 
-      if (start == s.length) {
-        return List("")
+          cache(start) = results.toList
+          results.toList
+        }
       }
-
-      val results = for {
-        end <- (start + 1 to s.length)
-        word = s.substring(start, end)
-        if wordSet.contains(word)
-        next <- wordBreak(end)
-      } yield {
-        if (next.isEmpty) word
-        else word + " " + next
-      }
-
-      cache(start) = results.toList
-      results.toList
     }
 
     wordBreak(0)

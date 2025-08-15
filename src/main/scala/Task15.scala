@@ -1,3 +1,4 @@
+import scala.annotation.tailrec
 // Дана 2D сеточная карта, состоящая из "1" (земля) и "0" (вода).
 // Подсчитайте количество островов.
 // Остров окружен водой и образован соединением соседних земель по горизонтали или вертикали.
@@ -11,32 +12,38 @@ object Task15 {
       if (x < 0 || x >= grid.length ||
         y < 0 || y >= grid(0).length ||
         grid(x)(y) == '0') {
-        return
+      }else {
+        // Помечаем посещенную землю как воду
+        grid(x)(y) = '0'
+
+        // Рекурсивно посещаем соседние клетки
+        dfs(x + 1, y) // вниз
+        dfs(x - 1, y) // вверх
+        dfs(x, y + 1) // вправо
+        dfs(x, y - 1) // влево
       }
-
-      // Помечаем посещенную землю как воду
-      grid(x)(y) = '0'
-
-      // Рекурсивно посещаем соседние клетки
-      dfs(x + 1, y) // вниз
-      dfs(x - 1, y) // вверх
-      dfs(x, y + 1) // вправо
-      dfs(x, y - 1) // влево
     }
 
+    @tailrec
     def countIslands(i: Int, j: Int, count: Int): Int = {
-      if (i >= grid.length) return count
-      if (j >= grid(0).length) return countIslands(i + 1, 0, count)
+      if (i >= grid.length) {
+        count
+      }else{
+        if (j >= grid(0).length) {
+          countIslands(i + 1, 0, count)
+        }else{
 
-      val newCount =
-        if (grid(i)(j) == '1') {
-          dfs(i, j)
-          count + 1
-        } else {
-          count
+          val newCount =
+            if (grid(i)(j) == '1') {
+              dfs(i, j)
+              count + 1
+            } else {
+              count
+            }
+
+          countIslands(i, j + 1, newCount)
         }
-
-      countIslands(i, j + 1, newCount)
+      }
     }
 
     countIslands(0, 0, 0)
