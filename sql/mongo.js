@@ -24,21 +24,6 @@ db.restaurants.find({
         totalScore: { $sum: "$grades.score" }
     });
 
-db.restaurants.aggregate([
-    { $unwind: "$grades" },
-    {
-        $group: {
-            _id: "$_id",
-            totalScore: { $sum: "$grades.score" },
-        }
-    },
-    {
-        $match: {
-            totalScore: { $gt: 90 }
-        }
-    },
-]);
-
 // Найдите рестораны, которые набрали более 80, но менее 100 баллов.
 db.restaurants.find({
         $expr: {
@@ -52,24 +37,6 @@ db.restaurants.find({
         _id: 1,
         totalScore: { $sum: "$grades.score" }
     });
-
-db.restaurants.aggregate([
-    { $unwind: "$grades" },
-    {
-        $group: {
-            _id: "$_id",
-            totalScore: { $sum: "$grades.score" },
-        }
-    },
-    {
-        $match: {
-            totalScore: {
-                $gt: 80,
-                $lt: 100
-            }
-        }
-    },
-]);
 
 // Найдите рестораны, которые находятся по широте менее -95.754168.
 db.restaurants.find({ "address.coord.0": { $lt: -95.754168 } });
