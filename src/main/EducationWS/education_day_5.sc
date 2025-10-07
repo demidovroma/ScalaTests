@@ -1,4 +1,7 @@
 import scala.annotation.tailrec
+import scala.concurrent.{Await, Future}
+import scala.concurrent.ExecutionContext.Implicits.global
+import scala.concurrent.duration.DurationInt
 
 // День 5
 // 24 - Tuple
@@ -293,3 +296,29 @@ class Duck extends Swimmable with Walkable {
 val d = new Duck
 d.swim()  // Duck swims
 d.walk()  // Duck walks
+
+// 32 - Future
+// Future — это механизм для асинхронного выполнения кода в Scala.
+// Он позволяет запускать вычисления в отдельном потоке, не блокируя основной поток программы.
+// Результат Future становится доступным позже — когда операция завершится.
+// Можно использовать методы map, flatMap, foreach для обработки результата без явного ожидания.
+
+// 1️⃣ Метод, который принимает число и возвращает Future[Int], возводящее его в квадрат
+def squareAsync(n: Int): Future[Int] = Future {
+  n * n
+}
+val resultSquare = squareAsync(4) // должно вернуть Future(16)
+val resultSquareAsync = Await.result(resultSquare, 1.second)
+
+// 2️⃣ Метод, который создаёт Future[String] и добавляет к строке " done" через map
+def markDone(task: Future[String]): Future[String] = {
+  task.map(_ + " done")
+}
+val resultMarkDone = (markDone(Future("Task 1"))) // должно вернуть Future("Task done")
+val resultMarkDoneAsync = Await.result(resultMarkDone, 1.second)
+
+// 3️⃣ Метод, который создаёт Future[Int] и печатает результат через foreach
+def printResult(n: Future[Int]): Unit = {
+  n.foreach(println)
+}
+printResult(Future(10)) // должно вывести 10
