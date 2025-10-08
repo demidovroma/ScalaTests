@@ -32,7 +32,8 @@ val bank = new BankAccount(1000)
 bank.deposit(500)
 
 // 20 - Case Class
-// case class в Scala — это особый вид класса, который создаётся для удобной работы с данными. В отличие от обычного класса:
+// case class в Scala — это особый вид класса, который создаётся для удобной работы с данными.
+// В отличие от обычного класса:
 // case class автоматически имеет equals, hashCode, toString.
 // Создаётся без ключевого слова new (автоматически доступен apply).
 // Значения параметров конструктора становятся val по умолчанию.
@@ -107,12 +108,12 @@ println(roma.grade) // 1
 
 // 2️⃣ Создать класс Rectangle с длиной и шириной,
 // и companion object с методом square(side: Int), создающим прямоугольник с равными сторонами
-class Rectangle(val length: Int, val width: Int)
+class RectangleNew(val length: Int, val width: Int)
 
-object Rectangle {
-  def square(side: Int): Rectangle =  new Rectangle(side, side)
+object RectangleNew {
+  def square(side: Int): RectangleNew =  new RectangleNew(side, side)
 }
-val c = Rectangle.square(10)
+val c = RectangleNew.square(10)
 println(c.length)
 println(c.width)
 
@@ -133,11 +134,11 @@ println(logger.level)
 // класса или реализации фабрик объектов.
 
 // 1️⃣ Реализовать apply в объекте Logger, чтобы при вызове Logger("DEBUG") создавался Logger с уровнем "DEBUG"
-class Logger(val level: String)
-object Logger {
-  def apply(level: String): Logger = new Logger(level)
+class LoggerNew(val level: String)
+object LoggerNew {
+  def apply(level: String): LoggerNew = new LoggerNew(level)
 }
-val log = Logger("DEBUG")
+val log = LoggerNew("DEBUG")
 println(log.level)
 
 // 2️⃣ Реализовать apply в companion object класса Circle, чтобы можно было создавать Circle с радиусом по умолчанию 1
