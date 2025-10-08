@@ -113,7 +113,7 @@ flattenPositive(List(List(1,-2), List(-3,4), List(0,5))) // должно вер�
 // Вход: List(1,2,3)
 // Ожидаемый результат: List(1,2,3,2,4,6,3,6,9)
 def flatMapMultiples(nums: List[Int]): List[Int] = {
-  nums.flatMap(n => List(n, n * 2, n*3))
+  nums.flatMap(n => List(n, n * 2, n * 3))
 }
 flatMapMultiples(List(1,2,3)) // должно вернуть List(1,2,3,2,4,6,3,6,9)
 
