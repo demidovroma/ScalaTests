@@ -161,7 +161,7 @@ concatFold(List("Hello", "Scala", "World")) // должно вернуть "Hell
 // Вход: List(2, 3, 4)
 // Ожидаемый результат: 24
 def productFold(nums: List[Int]): Int = {
-  nums.foldLeft(1){
+  nums.foldLeft(1) {
     (acc, n) =>
       acc * n
   }
