@@ -18,11 +18,9 @@ firstChar(None)          // должно вернуть "?"
 
 // 2️⃣ Дан Option[Int] и число multiplier: Int, вернуть произведение значения на multiplier,
 // если значение есть, иначе 0
-// Пример вызова: multiplyOption(Some(5), 3) // должно вернуть 15
-// Пример вызова: multiplyOption(None, 3)    // должно вернуть 0
 def multiplyOption(num: Option[Int], target: Int): Int = num match {
   case Some(n) => n * target
-  case _ => 0
+  case None => 0
 }
 multiplyOption(Some(5), 3) // должно вернуть 15
 multiplyOption(None, 3)    // должно вернуть 0
