@@ -97,33 +97,33 @@ StringUtils.reverse("Scala") // должно вернуть "alacS"
 
 // 1️⃣ Создать класс Student с полями name и grade,
 // и companion object с методом apply для создания студента с default grade = 1
-class Student(val name: String, val grade: Int)
-
 object Student {
   def apply(name: String): Student = new Student(name, 1)
 }
+class Student(val name: String, val grade: Int)
+
 val roma = Student("Roma")  // grade автоматически 1
 println(roma.name)  // Roma
 println(roma.grade) // 1
 
 // 2️⃣ Создать класс Rectangle с длиной и шириной,
 // и companion object с методом square(side: Int), создающим прямоугольник с равными сторонами
-class RectangleNew(val length: Int, val width: Int)
-
 object RectangleNew {
   def square(side: Int): RectangleNew =  new RectangleNew(side, side)
 }
+class RectangleNew(val length: Int, val width: Int)
+
 val c = RectangleNew.square(10)
 println(c.length)
 println(c.width)
 
 // 3️⃣ Создать класс Logger с полем level,
 // и companion object с методом defaultLogger, который возвращает Logger с level = "INFO"
-class Logger(val level: String)
-
 object Logger {
   def defaultLogger: Logger = new Logger("INFO")
 }
+class Logger(val level: String)
+
 val logger = Logger.defaultLogger
 println(logger.level)
 
@@ -134,18 +134,20 @@ println(logger.level)
 // класса или реализации фабрик объектов.
 
 // 1️⃣ Реализовать apply в объекте Logger, чтобы при вызове Logger("DEBUG") создавался Logger с уровнем "DEBUG"
-class LoggerNew(val level: String)
 object LoggerNew {
   def apply(level: String): LoggerNew = new LoggerNew(level)
 }
+class LoggerNew(val level: String)
+
 val log = LoggerNew("DEBUG")
 println(log.level)
 
 // 2️⃣ Реализовать apply в companion object класса Circle, чтобы можно было создавать Circle с радиусом по умолчанию 1
-class Circle(val radius: Int)
 object Circle {
   def apply(): Circle = new Circle(1)
 }
+class Circle(val radius: Int)
+
 val c = Circle()
 println(c.radius)
 
