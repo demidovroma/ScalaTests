@@ -86,9 +86,9 @@ sortByScore(List(("Alice", 50), ("Bob", 75), ("Charlie", 60))) // должно �
 // 1️⃣ Метод, который рекурсивно вычисляет n-е число Фибоначчи
 def fibonacci(n: Int): Int = {
   @tailrec
-  def loop(i: Int, prev: Int, curr: Int): Int = {
-    if (i >= n) curr
-    else loop(i + 1, curr, prev + curr)
+  def loop(i: Int, prev: Int, acc: Int): Int = {
+    if (i >= n) acc
+    else loop(i + 1, acc, prev + acc)
   }
 
   if (n == 0) 0
