@@ -20,6 +20,7 @@ pi // должно вернуть 3.14
 // Объяви lazy val, напиши println внутри вычисления, чтобы увидеть когда оно выполняется
 lazy val greeting = { println("Вычисляем greeting"); "Hello" }
 greeting // должно вывести "Вычисляем greeting" и вернуть "Hello"
+greeting
 
 // 3️⃣ def: метод, вычисляется каждый раз при вызове
 // Объяви def с println внутри и вызови дважды
@@ -96,10 +97,12 @@ multiplyList(List(1,2,3), 2)
 
 // 1️⃣ Написать программу с main, которая выводит "Hello, World!"
 // Пример вызова: запуск main должен вывести "Hello, World!"
-def main(): Unit = {
-  println("Hello, World!")
+object Main {
+  def main(): Unit = {
+    println("Hello, World!")
+  }
 }
-main();
+Main.main()
 
 // 2️⃣ Написать программу с main, которая принимает аргументы командной строки и выводит их в одну строку
 // Пример вызова: main(Array("Scala", "Fun")) // вывод: "Scala Fun"
@@ -110,10 +113,12 @@ main(Array("Scala", "Fun"))
 
 // 3️⃣ Написать программу с main, которая создаёт список чисел и выводит их сумму
 // Пример вызова: main(Array()) // вывод: 1 + 2 + 3 + 4 +
-def main(nums: Array[Int]): Unit = {
-  println(s"Сумма: ${nums.sum}")
+object Main {
+  def main(nums: Array[Int]): Unit = {
+    println(s"Сумма: ${nums.sum}")
+  }
 }
-main(Array(1,2,3,4))
+Main.main(Array(1,2,3,4))
 
 // Итог дня
 
