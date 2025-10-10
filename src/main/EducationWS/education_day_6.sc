@@ -40,7 +40,7 @@ filterEven(List(1,2,3,4)) // List(2,4)
 
 // 2. Убрать отрицательные числа.
 def removeNegatives(nums: List[Int]): List[Int] = {
-  nums.filter(_ < 0)
+  nums.filter(_ > 0)
 }
 removeNegatives(List(-1, 0, 5, -3)) // List(0,5)
 
@@ -359,7 +359,7 @@ lengthOpt("") // None
 
 // 3. Деление с проверкой делителя.
 def safeDiv(a: Int, b: Int): Option[Int] = {
-  if (b > 0) Some(a / b) else None
+  if (b != 0 || b > 0) Some(a / b) else None
 }
 safeDiv(10,0) // None
 safeDiv(10,2)
